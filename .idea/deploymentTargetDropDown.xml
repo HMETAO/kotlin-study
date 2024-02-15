@@ -18,6 +18,22 @@
           <timeTargetWasSelectedWithDropDown value="2024-02-14T13:33:21.303279400Z" />
         </State>
       </entry>
+      <entry key="app.gallery">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Lenovo\.android\avd\Pixel_3a_XL_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-15T09:55:02.030244500Z" />
+        </State>
+      </entry>
     </value>
   </component>
 </project>
