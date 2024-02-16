@@ -1,12 +1,15 @@
 package com.hmetao.gallery
 
+import android.app.ActionBar.LayoutParams
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -33,6 +36,7 @@ class GalleryAdapter : ListAdapter<PhotoItem, MyViewHolder>(DifferCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val holder: MyViewHolder
         if (viewType == 0) {
+            Log.d("HMETAO", "onCreateViewHolder: 1111")
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.gallery_cell, parent, false)
             holder = MyViewHolder(view)
@@ -44,9 +48,16 @@ class GalleryAdapter : ListAdapter<PhotoItem, MyViewHolder>(DifferCallback) {
                 }
             }
         } else {
+            Log.d("HMETAO", "onCreateViewHolder: 222")
+
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.gallery_footer, parent, false)
-            (view.layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true
+                    .also {
+                        (it.layoutParams as GridLayoutManager.LayoutParams).width =
+                            parent.context.resources.displayMetrics.widthPixels
+
+
+                    }
             holder = MyViewHolder(view)
         }
 
