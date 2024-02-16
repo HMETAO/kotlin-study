@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -20,20 +21,40 @@ import io.supercharge.shimmerlayout.ShimmerLayout
 
 class GalleryAdapter : ListAdapter<PhotoItem, MyViewHolder>(DifferCallback) {
 
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == itemCount - 1) 1 else 0
+    }
+
+    override fun getItemCount(): Int {
+        return super.getItemCount() + 1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.gallery_cell, parent, false)
-        val holder = MyViewHolder(view)
-        holder.itemView.setOnClickListener {
-            Bundle().apply {
-                putParcelable("PHOTO", getItem(holder.adapterPosition))
-                holder.itemView.findNavController()
-                    .navigate(R.id.action_galleryFragment_to_photoFragment, this)
+        val holder: MyViewHolder
+        if (viewType == 0) {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.gallery_cell, parent, false)
+            holder = MyViewHolder(view)
+            holder.itemView.setOnClickListener {
+                Bundle().apply {
+                    putParcelable("PHOTO", getItem(holder.adapterPosition))
+                    holder.itemView.findNavController()
+                        .navigate(R.id.action_galleryFragment_to_photoFragment, this)
+                }
             }
+        } else {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.gallery_footer, parent, false)
+            (view.layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true
+            holder = MyViewHolder(view)
         }
+
         return holder
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        if (getItemViewType(position) == 1) return
         val shimmerLayout = holder.itemView.findViewById<ShimmerLayout>(R.id.shimmerLayoutCell)
         shimmerLayout.apply {
             setShimmerColor(0x55ffffff)
